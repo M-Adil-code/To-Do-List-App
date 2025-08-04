@@ -1,79 +1,74 @@
-var add=document.querySelector('input')
+let add = document.querySelector('input')
 
-var copy;
+let copy;
+let input = document.querySelector('input')
 
-var input=document.querySelector('input')
-
-var list=document.querySelector('.LIST')
-var arrtode=new Array;
-var storageitems;
-if(localStorage.getItem(1)!==null){
-   arrtode=JSON.parse(localStorage.getItem(1))
-   storageitems=JSON.parse(localStorage.getItem(1))
-   storageitems.forEach(e=>{
-    additem(e)
-})
+let list = document.querySelector('.LIST>ul')
+let arrtode = new Array;
+let storageitems;
+if (localStorage.getItem(1) !== null) {
+    arrtode = JSON.parse(localStorage.getItem(1))
+    storageitems = JSON.parse(localStorage.getItem(1))
+    storageitems.forEach(e => {
+        additem(e)
+    })
 }
-
-
+clear.addEventListener('click', () => {
+    let result = confirm('do yuou want')
+    if (result) {
+        localStorage.clear()
+        list.innerHTML = ''
+    }
+})
 
 input.addEventListener('keypress',
-    function(e){
-        
+    function (e) {
+        if (e.key == 'Enter') {
+            let inputtxt = add.value
+            let presenttodo = JSON.parse(localStorage.getItem(1))
+            console.log(presenttodo, presenttodo == null)
+            if (presenttodo == null) {
+                additem(inputtxt)
+                arrtode.push(inputtxt)
+                localStorage.setItem(1, JSON.stringify(arrtode))
+            }
+            else {
+                if (!presenttodo.includes(inputtxt.trim())) {
+                    additem(inputtxt)
+                    arrtode.push(inputtxt)
 
-       if(e.key=='Enter'){
-          let inputtxt=add.value
-          additem(inputtxt)
-          arrtode.push(inputtxt)
-         
-          console.log(arrtode,JSON.stringify(arrtode))
-          localStorage.setItem(1,JSON.stringify(arrtode))
-         
-    
-         
-       }
-        
+                    localStorage.setItem(1, JSON.stringify(arrtode))
+                }
+                else {
+                    alert('Item Alredy Exists!')
+
+                }
+            }
+        }
     }
-  
+
 )
-function additem(value){
-   
-    let listitem=document.createElement('div')
-    listitem.innerHTML=`<div class="todo"><p>${value}</p><input type="checkbox" name="" class="todoinputs"></div>`;
+function additem(value) {
+
+    let listitem = document.createElement('li')
+    listitem.classList.add('todo')
+    listitem.innerHTML = `<p>${value}</p><span class='todoinputs Cut' >&#10060; </span>`;
+    listitem.querySelector('.Cut').addEventListener('click', (e) => {
+
+        deleteitem(e)
+    })
     list.appendChild(listitem)
-    add.value=''  
+    add.value = ''
 }
-
-
-function deleteitem(){
-    let txt;
-    let newarr=new Array;
-    if(list)
-        
-    document.querySelectorAll('.todo>input').forEach( (e)=>{
-         if(e.checked){ 
-             console.log(arrtode)  
-             txt=e.previousElementSibling.innerHTML
-            
-             console.log(txt)
-             newarr=arrtode.filter((t)=>{
-                return t!==txt;
-                
-             })
-             arrtode=newarr
-             localStorage.setItem(1,JSON.stringify(arrtode))
-             console.log(newarr)
-            
-             e.parentElement.remove()
-            
-        }
-        else{
-            
-        }
-    }
-)
-}
-list.addEventListener("click",deleteitem)
+let deleteitem = ((e) => {
+    console.log(e, 'helo')
+    let deltext = e.target.parentElement.querySelector('p').innerHTML;
+    let newarr = new Array;
+    let oldarr = JSON.parse(localStorage.getItem(1))
+    newarr = oldarr.filter((v) => v !== deltext)
+    localStorage.setItem(1, JSON.stringify(newarr))
+    e.target.parentElement.remove();
+})
 
 
 
