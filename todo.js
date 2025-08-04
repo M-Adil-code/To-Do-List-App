@@ -14,7 +14,7 @@ if (localStorage.getItem(1) !== null) {
     })
 }
 clear.addEventListener('click', () => {
-    let result = confirm('do yuou want')
+    let result = confirm('Do You Want To Process?')
     if (result) {
         localStorage.clear()
         list.innerHTML = ''
