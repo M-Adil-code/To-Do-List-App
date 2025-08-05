@@ -52,22 +52,35 @@ function additem(value) {
 
     let listitem = document.createElement('li')
     listitem.classList.add('todo')
-    listitem.innerHTML = `<p>${value}</p><span class='todoinputs Cut' >&#10060; </span>`;
+    listitem.innerHTML = `<p>${value}</p><span>  <span class="check">&check;</span>&nbsp;<span class='Cut' >&#10060;</span></span>`;
     listitem.querySelector('.Cut').addEventListener('click', (e) => {
 
         deleteitem(e)
     })
+     listitem.addEventListener('click', (e) => {
+
+        doneitem(e)
+    })
+
     list.appendChild(listitem)
     add.value = ''
 }
 let deleteitem = ((e) => {
+    e.stopPropagation()
     console.log(e, 'helo')
-    let deltext = e.target.parentElement.querySelector('p').innerHTML;
+    console.log(e.target.parentElement.parentElement)
+    let deltext = e.target.parentElement.parentElement.querySelector('p').innerHTML;
     let newarr = new Array;
     let oldarr = JSON.parse(localStorage.getItem(1))
     newarr = oldarr.filter((v) => v !== deltext)
     localStorage.setItem(1, JSON.stringify(newarr))
-    e.target.parentElement.remove();
+    e.target.parentElement.parentElement.remove();
+})
+let doneitem=((e)=>{
+    console.log(e.target)
+    e.target.querySelector('.check').classList.toggle('check-show')
+    e.target.querySelector('p').classList.toggle('done-task')
+   
 })
 
 

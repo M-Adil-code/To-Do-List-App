@@ -35,7 +35,6 @@ body{
 }
 .todo{
     width: 100%;
-    
     background: black;
     color: aliceblue;
     padding: 5px 10px 5px 10px;
@@ -48,38 +47,52 @@ body{
     border-radius: 8px;
 
 }
-#add{
-    
- 
-}
+
 #add>input{
     margin: 20px auto;
     display: block;
     width: 90%;
     height: 30px;
-   
     outline: none;
     padding: 5px;
     border-radius: 10px;
     border: none;
 }
 .Cut{
-    position: absolute;
-    top: 1px;
-    right: 1px;
-    
-    padding: 2px;
    
-    color: rgb(32, 30, 30);
-    font-weight: bolder;
-    font-size: 14px;
+   
+    color: white !important;
+    padding: 3px;
+    border-radius: 50%;
+    font-weight: 900;
     cursor: pointer;
+    
 }
-.done{
-    text-decoration: line-through;
-    color: red;
-    user-select: none;
+.check{
+    background: green;
+    color: white;
+    padding: 2px 5px;
+    border-radius: 20%;
+    font-weight: 900;
+    cursor: pointer;
+    visibility: hidden;
+}
+.check-show{
+    visibility: visible;
+
 }
 .List ul li{
     list-style: none;
+    padding: 8px 6px;
+}
+.done-task{
+    text-decoration: line-through;
+
+
+}
+@media (max-width:500px){
+    .con{
+       width: 95%;
+       margin-top: 40px;
+    }
 }
